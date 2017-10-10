@@ -1,0 +1,14 @@
+.syntaxhighlighter .placeholder {
+	background-color: #FFFF00 !important;
+}
+.syntaxhighlighter .blockmark {
+	background-color: #00FF00 !important;
+}
+.syntaxhighlighter .smartedit-reddot {
+	color: #FF0000 !important;
+}
+.syntaxhighlighter .rendertag {
+	background-color: #0000FF !important;
+	color: #FFFFFF !important;
+}
+
