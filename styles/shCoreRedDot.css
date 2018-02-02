@@ -1,0 +1,20 @@
+.syntaxhighlighter a, .syntaxhighlighter div, .syntaxhighlighter code, .syntaxhighlighter table, .syntaxhighlighter table td, .syntaxhighlighter table tr, .syntaxhighlighter table tbody, .syntaxhighlighter table thead, .syntaxhighlighter table caption, .syntaxhighlighter textarea {
+	line-height: 1.2em !important;
+}
+
+.syntaxhighlighter .placeholder {
+	background-color: #FFFF00 !important;
+}
+
+.syntaxhighlighter .blockmark {
+	background-color: #00FF00 !important;
+}
+
+.syntaxhighlighter .smartedit-reddot {
+	color: #FF0000 !important;
+}
+
+.syntaxhighlighter .rendertag {
+	background-color: #0000FF !important;
+	color: #FFFFFF !important;
+}

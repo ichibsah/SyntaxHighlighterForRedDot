@@ -1,20 +1,28 @@
+.syntaxhighlighter a, .syntaxhighlighter div, .syntaxhighlighter code, .syntaxhighlighter table, .syntaxhighlighter table td, .syntaxhighlighter table tr, .syntaxhighlighter table tbody, .syntaxhighlighter table thead, .syntaxhighlighter table caption, .syntaxhighlighter textarea {
+	line-height: 1.2em !important;
+}
+
 .syntaxhighlighter .placeholder {
 	color: #000000 !important;
 	background-color: #ffff80 !important;
 }
+
 .syntaxhighlighter .blockmark {
 	color: #008800 !important;
 	background-color: #ccffcc !important;
 }
-.syntaxhighlighter .smartedit-reddot {
+
+.syntaxhighlighter .smartedit-wsm {
 	color: #ff0000 !important;
 	background-color: #ffe5e5 !important;
 }
+
 .syntaxhighlighter .rendertag {
 	color: #197674 !important;
 	background-color: #ccf0ff !important;
 }
-.syntaxhighlighter .rendertag-sn {
+
+.syntaxhighlighter .rendertag-short {
 	color: #000000 !important;
 	background-color: #ccf0ff !important;
 }

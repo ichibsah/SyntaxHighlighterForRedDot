@@ -1,31 +1,48 @@
 <html>
 
 <head>
-    <script src='shCore.js' type='text/javascript'></script>
-    <script src='shBrushWSM.js' type='text/javascript'></script>
-    <link href='shCore.css' rel='stylesheet' type='text/css' />
-    <link href='shThemeDefault.css' rel='stylesheet' type='text/css' />
-    <link href='shCoreWSM.css' rel='stylesheet' type='text/css' />
+    <script type="text/javascript" src="scripts/XRegExp.js"></script>
+    <script type="text/javascript" src="scripts/shCore.js"></script>
+    <link href="styles/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="scripts/shBrushWSM.js"></script>
+    <link href="styles/shCoreWSM.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <pre class="brush: RedDot">
+    <pre class="brush: WSM">
         &lt;!IoRedDotOpenPage&gt;&lt;a href=&quot;&lt;%infoBackLink%&gt;&quot;&gt;BACK&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
         &lt;hr/&gt;
         &lt;!IoRangeDynLink&gt;&lt;%anchorDymanic%&gt;&lt;br/&gt;&lt;!/IoRangeDynLink&gt;
         &lt;%!! Store:Get(test) !!%&gt;
+        &lt;li&gt;
+        &lt;!--  Render link to the current index page  --&gt;
+        &lt;a href=&quot;&lt;%!! Context:CurrentIndex.GetUrl() !!%&gt;&quot;&gt;
+            &lt;%!! Context:CurrentIndex.Page.Headline !!%&gt;
+        &lt;/a&gt;
         &lt;reddot:cms&gt;
             &lt;if&gt;
-                &lt;query&gt;
-                    &lt;htmltext&gt;&lt;/htmltext&gt;
-                &lt;/query&gt;
-                &lt;query type=&quot;else&quot;&gt;
-                    &lt;xmltext&gt;&lt;/xmltext&gt;
-                &lt;/query&gt;
+            If the current index has child pages
+            &lt;query valuea=&quot;Context:CurrentIndex.HasChildren()&quot; operator=&quot;==&quot; valueb=&quot;Bool:True&quot;&gt;
+                &lt;htmltext&gt;
+                &lt;!--  Render list and call next level  --&gt;
+                &lt;ul&gt;
+                    &lt;navigation:nextlevel&gt;
+                &lt;/ul&gt;
+                &lt;/htmltext&gt;
+            &lt;/query&gt;
             &lt;/if&gt;
-            &lt;foreach&gt;&lt;/foreach&gt;
         &lt;/reddot:cms&gt;
-        </pre>
+        &lt;/li&gt;
+        &lt;reddot:cms&gt;
+        &lt;foreach itemname=&quot;item&quot; object=&quot;Context:CurrentPage.Elements&quot; countername=&quot;counter&quot;&gt;
+          &lt;output type=&quot;object&quot; object=&quot;Store:counter&quot; /&gt;
+          &lt;output type=&quot;object&quot; object=&quot;Store:item.Name&quot; /&gt;
+          &lt;output type=&quot;object&quot; object=&quot;Escape:Br&quot; /&gt;
+        &lt;/foreach&gt;
+      &lt;/reddot:cms&gt;
+    </pre>
     <script type='text/javascript'>
         SyntaxHighlighter.all();
     </script>
