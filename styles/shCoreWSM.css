@@ -2,27 +2,27 @@
 	line-height: 1.2em !important;
 }
 
-.syntaxhighlighter .placeholder {
+.syntaxhighlighter .wsm-placeholder {
 	color: #000000 !important;
 	background-color: #ffff80 !important;
 }
 
-.syntaxhighlighter .blockmark {
+.syntaxhighlighter .wsm-blockmark {
 	color: #008800 !important;
 	background-color: #ccffcc !important;
 }
 
-.syntaxhighlighter .smartedit-wsm {
+.syntaxhighlighter .wsm-smartedit {
 	color: #ff0000 !important;
 	background-color: #ffe5e5 !important;
 }
 
-.syntaxhighlighter .rendertag {
+.syntaxhighlighter .wsm-rendertag {
 	color: #197674 !important;
 	background-color: #ccf0ff !important;
 }
 
-.syntaxhighlighter .rendertag-short {
+.syntaxhighlighter .wsm-rendertag-short {
 	color: #000000 !important;
 	background-color: #ccf0ff !important;
 }

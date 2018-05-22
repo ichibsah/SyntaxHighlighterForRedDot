@@ -1,20 +1,20 @@
-SyntaxHighlighter.brushes.Custom = function () {
+SyntaxHighlighter.brushes.wsm = function () {
     this.regexList = [
-        { regex: /&lt;%([^!])+?%&gt;/gm, css: 'placeholder' },
-        { regex: /&lt;!(\/?)IoRange(.+?)&gt;/gm, css: 'blockmark' },
-        { regex: /&lt;!IoRedDot(.+?)&gt;/gm, css: 'smartedit-wsm' },
-        { regex: /&lt;%!!(.+?)!!%&gt;/gm, css: 'rendertag-short' },
-        { regex: /&lt;(\/?)reddot:cms&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;navigation(.*?)&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)output(.*?)&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)foreach(.*?)&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)if&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)query(.*?)&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)htmltext&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)xmltext&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)currentPageCommentCount(.*?)&gt;/gm, css: 'rendertag' },
-        { regex: /&lt;(\/?)pagesMostCommented(.*?)&gt;/gm, css: 'rendertag' }
+        { regex: /&lt;%([^!])+?%&gt;/gm, css: 'wsm-placeholder' },
+        { regex: /&lt;!(\/?)IoRange(.+?)&gt;/gm, css: 'wsm-blockmark' },
+        { regex: /&lt;!IoRedDot(.+?)&gt;/gm, css: 'wsm-smartedit' },
+        { regex: /&lt;%!!(.+?)!!%&gt;/gm, css: 'wsm-rendertag-short' },
+        { regex: /&lt;(\/?)reddot:cms&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;navigation(.*?)&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)output(.*?)&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)foreach(.*?)&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)if&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)query(.*?)&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)htmltext&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)xmltext&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)currentPageCommentCount(.*?)&gt;/gm, css: 'wsm-rendertag' },
+        { regex: /&lt;(\/?)pagesMostCommented(.*?)&gt;/gm, css: 'wsm-rendertag' }
     ];
 };
-SyntaxHighlighter.brushes.Custom.prototype = new SyntaxHighlighter.Highlighter();
-SyntaxHighlighter.brushes.Custom.aliases = ['WSM'];
+SyntaxHighlighter.brushes.wsm.prototype = new SyntaxHighlighter.Highlighter();
+SyntaxHighlighter.brushes.wsm.aliases = ['wsm','ms'];

@@ -1,0 +1,554 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="scripts/XRegExp.js"></script>
+    <script type="text/javascript" src="scripts/shCore.js"></script>
+    <link href="styles/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="scripts/shBrushWSM.js"></script>
+    <script type="text/javascript" src="scripts/shBrushxWSM.js"></script>
+    <link href="styles/shCoreWSM.css" rel="stylesheet" type="text/css" />
+    <link href="styles/shCorexWSM.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Haben wir schon</h2>
+
+    <h3>Standard-Blockmarkierungen</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeBack&gt; ... &lt;!/IoRangeBack&gt;
+        &lt;!IoRangeBreadCrumb&gt; ... &lt;!/IoRangeBreadCrumb&gt;
+        &lt;!IoRangeConditional&gt; ... &lt;!/IoRangeConditional&gt;
+        &lt;!IoRangeData&gt; ... &lt;!/IoRangeData&gt;
+        &lt;!IoRangeDragDrop&gt; ... &lt;!/IoRangeDragDrop&gt;
+        &lt;!IoRangeDynLink&gt; ... &lt;!/IoRangeDynLink&gt;
+        &lt;!IoRangeHit&gt; ... &lt;!/IoRangeHit&gt;
+        &lt;!IoRangeList&gt; ... &lt;!/IoRangeList&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Ausf&uuml;hrung von Code zur Laufzeit oder Publizierung</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeRDExecute&gt;
+            ...
+            Dieser Block wird nur innerhalb des CMS zur Laufzeit (SmartEdit/Preview)
+            ausgef&uuml;hrt und nicht bei der Publizierung. Er muss entsprechenden
+            Code (z.B. C#, VBScript, PHP etc. enthalten) =&gt; L&auml;uft innerhalb
+            des CMS AppPool und unterliegt diesen Regeln.
+            ...
+        &lt;!/IoRangeRDExecute&gt;
+
+
+        &lt;!IoRangePreExecute&gt;
+            ...
+            Dieser Block wird nur innerhalb des CMS zur Laufzeit (Preview/Publish)
+            ausgef&uuml;hrt und nicht im SmartEdit. Er muss entsprechenden Code
+            (z.B. C#, VBScript, PHP etc. enthalten) =&gt; PreExecute-Regeln via
+            extra AppPool.
+            ...
+        &lt;!/IoRangePreExecute&gt;
+    </pre>
+
+    <hr>
+
+    <h2>Mal was neues</h2>
+
+    <h3>Rendermodes 2.0</h3>
+    <p>
+        Int:0 When you open the page in page preview mode.
+        <br> Int:1 When you open the page in SmartEdit.
+        <br> Int:2 When you publish the page.
+        <br>
+    </p>
+    <pre class="brush: wsm;">
+        = Modus 0
+        &lt;!IoRangePreviewMode&gt; ... &lt;!/IoRangePreviewMode&gt;
+        alias f&uuml;r
+        &lt;!IoRangeNoRedDotMode&gt; ... &lt;!/IoRangeNoRedDotMode&gt;
+
+        = Modus 1
+        &lt;!IoRangeEditMode&gt; ... &lt;!/IoRangeEditMode&gt;
+        &lt;!IoRangeEditModeOn&gt; ... &lt;!/IoRangeEditModeOn&gt;
+        &lt;!IoRangeEditModeOff&gt; ... &lt;!/IoRangeEditModeOff&gt;
+        alias f&uuml;r:
+        &lt;!IoRangeRedDotMode&gt; ... &lt;!/IoRangeRedDotMode&gt;
+        &lt;!IoRangeRedDotEditOnly&gt; ... &lt;!/IoRangeRedDotEditOnly&gt;
+        &lt;!IoRangeNoEditMode&gt; ... &lt;!/IoRangeNoEditMode&gt;
+
+        = Modus 2
+        &lt;!IoRangePublishMode&gt; ... &lt;!/IoRangePublishMode&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Definitionsbl&ouml;cke</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangePreDefinition&gt; oder &lt;!IoRangeTemp&gt;
+            ...
+            Variablen (MetaElemente), welche nur innerhalb der Content-Klasse tempor&auml;r zur Verf&uuml;gung stehen.
+            ...
+            &lt;%tempVar%&gt; = 3000
+            ...
+            &lt;%valueIntA%&gt; = 0
+            ...
+            &lt;%ArrayElement%&gt; = (&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;1&quot;)
+            ...
+        &lt;!/IoRangePreDefinition&gt; oder &lt;!/IoRangeTemp&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Zugriff auf die Session im SmartEdit/SmartTree (Vorschau etc.)</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeSession&gt; oder &lt;!IoRangeUiSession&gt;
+            ...
+            Variablen (MetaElemente), welche nur innerhalb der aktuellen Session (GUI only)
+            tempor&auml;r zur Verf&uuml;gung stehen. Diese k&ouml;nnen gesetzt oder abgefragt werden.
+            ...
+            &lt;%lastAction%&gt; = &quot;...&quot;  Aus Session
+            ...
+            &quot;...&quot; = &lt;%lastAction%&gt;  In Session
+            ...
+        &lt;!/IoRangeSession&gt; oder &lt;!/IoRangeUiSession&gt;
+    </pre>
+
+    <hr>
+
+    <h3>If/Else - Bedingung</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeIf&gt;
+            &lt;%ConditionElement%&gt;
+            &lt;!IoRangeThen&gt; ... &lt;!/IoRangeThen&gt;
+            &lt;!IoRangeElse&gt; ... &lt;!/IoRangeElse&gt;
+        &lt;!/IoRangeIf&gt;
+    </pre>
+
+    <hr>
+
+    <h3>If Exists/Else - Bedingung</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeIfExists&gt;
+            &lt;%Element%&gt;
+            &lt;!IoRangeThen&gt; ... &lt;!/IoRangeThen&gt;
+            &lt;!IoRangeElse&gt; ... &lt;!/IoRangeElse&gt;
+        &lt;!/IoRangeIfExists&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Switch/Case - Bedingung</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeSwitch&gt;
+            &lt;%ConditionElement%&gt;
+            &lt;!IoRangeCase&gt; &lt;%CaseElement%&gt; ... &lt;!/IoRangeCase&gt;
+            &lt;!IoRangeCase&gt; &lt;%CaseElement%&gt; ... &lt;!/IoRangeCase&gt;
+            &lt;!IoRangeCase&gt; &lt;%CaseElement%&gt; ... &lt;!/IoRangeCase&gt;
+            &lt;!IoRangeCase&gt; &lt;%CaseElement%&gt; ... &lt;!/IoRangeCase&gt;
+            &lt;!IoRangeElse&gt; ... &lt;!/IoRangeElse&gt;
+        &lt;!/IoRangeSwitch&gt;
+    </pre>
+
+    <hr>
+
+    <h3>ForEach - Schleife</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeForEach&gt;
+            ...
+            &lt;%ArrayElement%&gt;
+            ... 
+        &lt;!/IoRangeForEach&gt;
+    </pre>
+
+    <hr>
+
+    <h3>For Do - Schleife</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeFor&gt;
+            &lt;%ConditionElement%&gt;
+            &lt;!IoRangeDo&gt;
+                ...
+            &lt;!/IoRangeDo&gt;
+        &lt;!/IoRangeFor&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Einfache Berechnungen</h3>
+    <pre class="brush: wsm;">
+        operator + - / * &ap; auf Typ: FLOAT, INT oder DATE
+
+        &lt;!IoRangeMath&gt;
+            ...
+            &lt;%valueIntA%&gt; - 1
+            ...
+            &lt;%valueIntA%&gt; + &lt;%tempVar%&gt;
+            ...
+            &lt;%valueIntA%&gt; + &lt;%valueIntB%&gt;
+            ...
+            &lt;%valueDateA%&gt; - (1).asDate("day")
+            ...
+            &lt;%valueDateA%&gt; - (1).asDate("hour")
+            ...
+        &lt;!/IoRangeMath&gt;
+    </pre>
+
+    <h4>Beispiel:</h4>
+    <pre class="brush: wsm;">
+        &lt;!IoRangePreDefinition&gt; oder &lt;!IoRangeTemp&gt;
+            ...
+            &lt;%tempVar%&gt; = &lt;!IoRangeMath&gt;&lt;%valueIntA%&gt; + 3000&lt;!/IoRangeMath&gt;
+            ...
+        &lt;!/IoRangePreDefinition&gt; oder &lt;!/IoRangeTemp&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Include vom Filesystem des Servers</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeInclude&gt;
+            ...
+            &lt;%FileRepositoryElement%&gt;
+            ...
+        &lt;!/IoRangeInclude&gt;
+    </pre>
+
+    <hr>
+
+    <h3>F&uuml;r Kommentare innerhalb der Templates, welche beim Publizieren verschwinden k&ouml;nnen</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeComment&gt;
+            ...
+            Hier steht Text, welcher beim Publizieren nicht ausgegeben wird (removed)
+            ...
+        &lt;!/IoRangeComment&gt;
+        
+        = Ersatz f&uuml;r &lt;!IoRangeNoRedDotMode&gt;&lt;!IoRangeRedDotMode&gt; ... &lt;!/IoRangeRedDotMode&gt;&lt;!/IoRangeNoRedDotMode&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Eine Idee &auml;hnlich wie javaDOC, damit man automatisch eine CK/Template Doku erzeugen kann</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeDocumentation&gt;
+            ...
+           Hier steht Text, welcher als Documentation innerhalb der Content-Klassen dient.
+           Diese Bl&ouml;cke k&ouml;nnen sp&auml;ter in einem noch zu definierenden Format
+           (z.B. Markdown etc.) ausgegeben, abgefragt oder auf andere Art und Weise verwendent werden.
+            ...
+        &lt;!/IoRangeDocumentation&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Keine Ausgabe bei der Publizierung, jedoch ohne Einschr&auml;nkung auf die Elementeigenschaften</h3>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeNoOutput&gt;
+            ...
+            Hier steht Element, welches z.B. f&uuml;r
+
+                &lt;!IoRangeConditional&gt; ... &lt;!/IoRangeConditional&gt;
+
+            oder
+
+                &lt;!IoRangeList&gt; ... &lt;!/IoRangeList&gt;
+
+            ben&ouml;tigt wird (z.B. Liste etc)
+            ...
+        &lt;!/IoRangeNoOutput&gt;
+
+        = Ersatz f&uuml;r &lt;!IoRangeNoRedDotMode&gt;&lt;!IoRangeRedDotMode&gt; ... &lt;!/IoRangeRedDotMode&gt;&lt;!/IoRangeNoRedDotMode&gt;
+
+        Beispiel:
+
+        Vorher:
+        &lt;!IoRangeDynLink&gt;&lt;a id=&quot;&lt;%infoPageID%&gt;&quot;&gt;&lt;%headlinePage%&gt;&lt;/a&gt;
+          &lt;!IoRangeNoRedDotMode&gt;&lt;!IoRangeRedDotMode&gt;&lt;%anchorDynamic%&gt;&lt;!/IoRangeRedDotMode&gt;&lt;!/IoRangeNoRedDotMode&gt;
+        &lt;!/IoRangeDynLink&gt;
+
+        Nachher:
+        &lt;!IoRangeDynLink&gt;&lt;a id=&quot;&lt;%infoPageID%&gt;&quot;&gt;&lt;%headlinePage%&gt;&lt;/a&gt;
+          &lt;!IoRangeNoOutput&gt;&lt;%anchorDynamic%&gt;&lt;!/IoRangeNoOutput&gt;
+        &lt;!/IoRangeDynLink&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Navigation</h3>
+
+    <h4>In den Navigation-Templates</h4>
+    <i>Hinweis =&#x3E; Jetzt Referenzieren m&#xF6;glich, &#xE4;hnlich (Navigation ... guid: oder GetPage(Guid:) ...)</i>
+    <pre class="brush: wsm;">
+        &#x3C;a href=&#x22;&#x3C;%ListNavigationA%&#x3E;&#x22; target=&#x22;_blank&#x22;&#x3E;&#x3C;%pageHeadline%&#x3E;&#x3C;/a&#x3E;
+        &#x3C;!IoRangeIfExists&#x3E;
+            &#x3C;%ListNavigationA%&#x3E; &#x3C;!-- Bsp: HasChildren() und nachfolgend navigation:nextlevel --&#x3E;
+        &#xA0;&#xA0;&#xA0;&#xA0;&#x3C;!IoRangeThen&#x3E; &#x3C;!IoRangeNavigation&#x3E;&#x3C;%ListNavigationA%&#x3E;&#x3C;!/IoRangeNavigation&#x3E; &#x3C;!/IoRangeThen&#x3E;
+        &#xA0;&#xA0;&#xA0;&#xA0;&#x3C;!IoRangeElse&#x3E; &#x3C;!IoRangeNavigation&#x3E;&#x3C;%ListNavigationB%&#x3E;&#x3C;!/IoRangeNavigation&#x3E; &#x3C;!/IoRangeElse&#x3E;
+        &#x3C;!/IoRangeIfExists&#x3E;
+    </pre>
+
+    <h4>Aufruf Outputarea</h4>
+    <i>Hinweis =&#x3E; Jetzt Referenzieren m&#xF6;glich, Mapping und weitere Eigenschaften im Element &#xE4;hnlich Liste/Container.</i>
+    <pre class="brush: wsm;">
+        &#x3C;!IoRangeNavigationArea&#x3E;&#x3C;%NavigationElementBreadcrumb%&#x3E;&#x3C;!/IoRangeNavigationArea&#x3E;
+    </pre>
+
+    <h4>Boolsche Werte bzw. ein generisches Navigation-Element mit folgenden Optionen</h4>
+    <pre class="brush: wsm;">
+        Indizes:
+            &#x3C;%FirstIndex%&#x3E;
+            &#x3C;%CurrentIndex%&#x3E;
+            &#x3C;%LastIndex%&#x3E;
+            &#x3C;%Parent%&#x3E;    ?? Noch n&ouml;tig ??
+
+        Bool:
+            &#x3C;%IsHidden%&#x3E;  ?? Noch n&ouml;tig oder reicht der &#x22;Erscheinungszeitraum&#x22;
+                          und/oder &#x22;Nicht in der Navigation anzeigen&#x22; bei Seiteneigenschaften ??
+            &#x3C;%IsRoot%&#x3E;    ?? Noch n&ouml;tig ??
+
+        Int32:
+            &#x3C;%CurrentLevelCount%&#x3E;
+            &#x3C;%CurrentDepth%&#x3E;
+            &#x3C;%Count%&#x3E;
+    </pre>
+
+    <h4>Beispiele</h4>
+    <pre class="brush: wsm;">
+        &#x3C;!IoRangeConditional&#x3E;
+            &#x3C;!IoRangeConstraint&#x3E;
+                &#x3C;%FirstIndex%&#x3E; -ne &#x3C;%CurrentIndex%&#x3E;
+            &#x3C;!/IoRangeConstraint&#x3E;
+            &#x3C;!IoRangeThen&#x3E;
+                &lt;!IoRangePreDefinition&gt;
+                    &lt;%tempVar%&gt; = &lt;!IoRangeMath&gt;&lt;%valueIntA%&gt; + 3000 &lt;!/IoRangeMath&gt;
+                &lt;!/IoRangePreDefinition&gt;
+            &#x3C;!/IoRangeThen&#x3E;
+            &#x3C;!IoRangeElse&#x3E;
+                &lt;!IoRangeInclude&gt;
+                    &lt;%FileRepositoryElement%&gt;
+                &lt;!/IoRangeInclude&gt;
+            &#x3C;!/IoRangeElse&#x3E;
+        &#x3C;!/IoRangeConditional&#x3E;
+    </pre>
+
+    <pre class="brush: wsm;">
+        &#x3C;!IoRangeConditional&#x3E;
+            &#x3C;!IoRangeConstraint&#x3E;
+                &#x3C;%FirstIndex%&#x3E; -ne (&#x22;46012D6C5A5F4624B37424E2E3677202&#x22;).asGuid()
+            &#x3C;!/IoRangeConstraint&#x3E;
+            &#x3C;!IoRangeThen&#x3E; ... &#x3C;!IoRangeThen&#x3E;
+            &#x3C;!IoRangeElse&#x3E; ... &#x3C;!IoRangeElse&#x3E;
+        &#x3C;!/IoRangeConditional&#x3E;
+    </pre>
+
+    <hr>
+
+    <h3>Image-Gallery</h3>
+    <pre class="brush: wsm;">
+        &#x3C;!IoRedDot_ImageListMyGallery&#x3E;
+        &#x3C;!IoRangeImageList&#x3E;
+            &#x3C;span class=&#x22;xxx&#x22;&#x3E;
+                &#x3C;img src=&#x22;&#x3C;%ImageListMyGallery%&#x3E;&#x22; alt=&#x22;&#x3C;%attributeDescription%&#x3E; (Quelle: &#x3C;%attributeSource%&#x3E;)&#x22; /&#x3E;
+            &#x3C;/span&#x3E;
+        &#x3C;!/IoRangeImageList&#x3E;
+    </pre>
+
+    <hr>
+    <br>
+    <br>
+    <br>
+    <hr>
+
+    <h3>Variante A1</h3>
+    <p>
+        (angleich an WSM DS Logik) mit Constraint-Block und if/else
+        <br> Ausgabe bei if/else kann dann ganz anderer Text sein
+    </p>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeConditional&gt;
+            &lt;!IoRangeConstraint&gt;&lt;%Element%&gt;&lt;!/IoRangeConstraint&gt;
+            &lt;!IoRangeThen&gt; ... &lt;!IoRangeThen&gt;
+            &lt;!IoRangeElse&gt; ... &lt;!IoRangeElse&gt;
+        &lt;!/IoRangeConditional&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Variante A2</h3>
+
+    <p>
+        So notiert, k&ouml;nnte man auch weitere, &bdquo;echte&ldquo; Constraints formulieren, wie im DS:
+        <br>
+        <br>
+
+        <b>-eq (equals):</b>
+        <br>Checks whether the attribute value and the comparison value of the value parameter are equal.
+        <br>
+        <br>
+        <b>-ne (not equal):</b>
+        <br>Checks whether the attribute value and the comparison value of the value parameter are not equal.
+        <br>
+        <br>
+        <b>-gt (greater than):</b>
+        <br>Checks whether the attribute value is greater than the comparison value from the value parameter.
+        <br>
+        <br>
+        <b>-ge (greater equal):</b>
+        <br>Checks whether the attribute value is greater than or equal to the comparison value from the value parameter.
+        <br>
+        <br>
+        <b>-lt (less than):</b>
+        <br>Checks whether the attribute value is less than the comparison value from the value parameter.
+        <br>
+        <br>
+        <b>-le (less equal):</b>
+        <br>Checks whether the attribute value is less than or equal to the comparison value from the value parameter.
+        <br>
+        <br>
+        <b>-contains/-notcontains:</b>
+        <br>Checks whether the value parameter&apos;s comparison value is/is not contained in the attribute&apos;s first value. Other
+        values of multivalued attributes are not evaluated.
+        <br>
+        <br>
+        <h4>plus weitere:</h4>
+        <b>-and/-or</b><br>
+        <b>-like/-notlike</b><br>
+        <b>-match/-notmatch</b><br>
+        <br>
+    </p>
+
+
+    <h4>Note</h4>
+    <p>
+        <b>-containsall/-notcontainsall:</b>
+        <br> For value lists of multivalued attributes: Checks whether all comparison values from value are contained in the
+        attribute values. To negate the statement, use the not prefix.
+        <br>
+        <br>
+        <b>-containsany/--notcontainsany:</b>
+        <br> For value lists of multivalued attributes: Checks whether at least one comparison value of the value parameter is
+        contained in the attribute values. To negate the statement, use the not prefix.
+        <br>
+        <br>
+        <b>-existsinall/-notexistsinall:</b>
+        <br> For value lists of multivalued attributes: Checks whether all attribute values are contained in the comparison values
+        of value. To negate the statement, use the not prefix.
+        <br>
+        <br>
+        <b>-existsinany/-notexistsinany:</b>
+        <br> For value lists of multivalued attributes: checks whether at least one attribute values contained in the comparison
+        values of value. To negate the statement, use the not prefix.
+        <br>
+        <br>
+    </p>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeConditional&gt;
+            &lt;!IoRangeConstraint&gt;&lt;%Element%&gt; -ne (&quot;&quot;) &lt;!/IoRangeConstraint&gt;
+            &lt;!IoRangeThen&gt; ... &lt;!IoRangeThen&gt;
+            &lt;!IoRangeElse&gt; ... &lt;!IoRangeElse&gt;
+        &lt;!/IoRangeConditional&gt;
+    </pre>
+
+    <br>
+
+    <h4>(weitere Constraint Beispiele)</h4>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeConstraint&gt;&lt;%ArrayElement%&gt; -containsany (&quot;A&quot;, &quot;B&quot;, &quot;C&quot;) &lt;!/IoRangeConstraint&gt;
+        &lt;!IoRangeConstraint&gt;&lt;%ElementTypeNumber%&gt; -gt 5 &lt;!/IoRangeConstraint&gt;
+    </pre>
+
+    <br>
+
+    <h4>...nat&uuml;rlich auch mit Verkettung</h4>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeConstraint&gt;
+          &lt;%ElementATypeNumber%&gt; -le 100 -AND &lt;%ElementBTypeNumber%&gt; -existinany (&quot;3&quot;, &quot;7&quot;, &quot;9&quot;).asInt32()
+        &lt;!/IoRangeConstraint&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Variante B</h3>
+    <p>
+        wie vor, jedoch vereinfachte Kurzschreibweise
+        <br> Gibt Element bei vorhanden/gef&uuml;llt aus, ansonsten den Else Teil
+    </p>
+    <pre class="brush: wsm;">
+        &lt;!IoRangeConditional&gt;
+            &lt;%Element%&gt;
+            &lt;!IoRangeElse&gt; ... &lt;!IoRangeElse&gt;
+        &lt;!/IoRangeConditional&gt;
+    </pre>
+
+    <hr>
+
+    <h3>Inline-Funktionen</h3>
+    <i>&auml;hnlich wie im Delivery Server oder RenderTags ;) like .NET C# - Einige Beispiele:</i>
+    <pre class="brush: wsm;">
+        Bool:
+            &lt;%Element.StartsWidth()%&gt;
+            &lt;%Element.EndsWidth()%&gt;
+
+        String:
+            &lt;%Element.ToLower()%&gt;
+            &lt;%Element.ToUpper()%&gt;
+            &lt;%Element.SubString()%&gt;
+            &lt;%Element.Replace()%&gt;
+            &lt;%Element.RegExReplace()%&gt;
+
+        Int32:
+            &lt;%Element.IndexOf()%&gt;
+            &lt;%Element.LastIndexOf()%&gt;
+            &lt;%Element.Length()%&gt;
+
+        Encoding:
+            &lt;%Element.HtmlEncode()%&gt;
+            &lt;%Element.HtmlDecode()%&gt;
+            &lt;%Element.UrlEncode()%&gt;
+            &lt;%Element.UrlDecode()%&gt;
+            &lt;%Element.HtmlAttributeEncode()%&gt;
+            &lt;%Element.JavaScriptEncode()%&gt;
+            &lt;%Element.JavaScriptDecode()%&gt;
+            &lt;%Element.JsonEncode()%&gt;
+            &lt;%Element.JsonDecode()%&gt;
+            &lt;%Element.MD5Encode()%&gt;
+            &lt;%Element.Base64Encode()%&gt;
+            &lt;%Element.Base64Decode()%&gt;
+
+        Casting:
+            (&#x22;46012D6C5A5F4624B37424E2E3677202&#x22;).asGuid()
+            (&#x22;1234&#x22;).asInt32()
+            (&#x22;12345678&#x22;).asInt64()
+            (&#x22;1&#x22;).asBoolean()
+
+            &lt;%Element.asGuid()%&gt;
+            &lt;%Element.asString()%&gt;
+            &lt;%Element.asInt32()%&gt;
+            &lt;%Element.asInt64()%&gt;
+            &lt;%Element.asBoolean()%&gt;
+            &lt;%Element.asDate()%&gt;
+
+        </pre>
+
+    <hr>
+
+    <script type='text/javascript'>
+        SyntaxHighlighter.config.bloggerMode = false;
+        SyntaxHighlighter.config.tagName = "pre";
+        SyntaxHighlighter.defaults['first-line'] = 10;
+        SyntaxHighlighter.defaults['toolbar'] = false;
+        SyntaxHighlighter.all();
+    </script>
+</body>
+
+</html>

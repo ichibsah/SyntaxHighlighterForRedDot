@@ -1,0 +1,68 @@
+.syntaxhighlighter a, .syntaxhighlighter div, .syntaxhighlighter code, .syntaxhighlighter table, .syntaxhighlighter table td, .syntaxhighlighter table tr, .syntaxhighlighter table tbody, .syntaxhighlighter table thead, .syntaxhighlighter table caption, .syntaxhighlighter textarea {
+	line-height: 1.2em !important;
+}
+
+.syntaxhighlighter .xplaceholder {
+	color: #000000 !important;
+	background-color: #ffff80 !important;
+}
+
+.syntaxhighlighter .xblockmark {
+	color: #008800 !important;
+	background-color: #ccffcc !important;
+}
+
+.syntaxhighlighter .xblockmark-comment {
+	color: #000000 !important;
+	background-color: #d8d8d8 !important;
+}
+
+.syntaxhighlighter .xblockmark-condition {
+	color: #8a4b08 !important;
+	background-color: #f5d0a9 !important;
+}
+
+.syntaxhighlighter .xblockmark-loop {
+	color: #886a08 !important;
+	background-color: #f3e2a9 !important;
+}
+
+.syntaxhighlighter .xblockmark-constraint {
+	color: #8a2908 !important;
+	background-color: #f5bca9 !important;
+}
+
+.syntaxhighlighter .xblockmark-navigation {
+	color: #197674 !important;
+	background-color: #ccf0ff !important;
+}
+
+.syntaxhighlighter .xblockmark-rendermode {
+	color: #08088a !important;
+	background-color: #cecef6 !important;
+}
+
+.syntaxhighlighter .xblockmark-math {
+	color: #8a0808 !important;
+	background-color: #f8e0e0 !important;
+}
+
+.syntaxhighlighter .xblockmark-special {
+	color: #610b5e !important;
+	background-color: #f6cef5 !important;
+}
+
+.syntaxhighlighter .xsmartedit-wsm {
+	color: #ff0000 !important;
+	background-color: #ffe5e5 !important;
+}
+
+.syntaxhighlighter .xrendertag {
+	color: #197674 !important;
+	background-color: #ccf0ff !important;
+}
+
+.syntaxhighlighter .xrendertag-short {
+	color: #000000 !important;
+	background-color: #ccf0ff !important;
+}
